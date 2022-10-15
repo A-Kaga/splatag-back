@@ -114,52 +114,6 @@ def get_tag_img(player_name, back_name, badge_name, title, id):
 
 
 if __name__ == '__main__':
-    '''
-    player_name = "player"
-    back_name = "Npl_Catalog_Season01_Lv31.webp"
-    badge_name = ["Badge_CoopGrade_Normal_Shakedent_Lv00.webp",
-                  "Badge_CoopGrade_Normal_Shakedent_Lv00.webp",
-                  "Badge_CoopGrade_Normal_Shakedent_Lv00.webp"]
-    title = "I am TITLE"
-    id = "#2101"
-
-    background = get_tag_background(back_name)
-
-    badge_size = 30
-    player_name_size = 60
-    title_size = 40
-    id_size = 30
-    offset_size = background.size[1] * 0.03
-
-    player_name_ttf = ImageFont.truetype(ttf_path, player_name_size)
-    title_ttf = ImageFont.truetype(ttf_path, title_size)
-    id_ttf = ImageFont.truetype(ttf_path, id_size)
-
-    title_pos = (0, 0)
-    player_name_pos = (0.5 * (background.size[0] - player_name_ttf.getsize(player_name)[0]),
-                       0.5 * (background.size[1] - player_name_ttf.getsize(player_name)[1]))
-    id_pos = (0, background.size[1] - id_size)
-    drawer = ImageDraw.Draw(background)
-    _, _, player_name_width, player_name_height = drawer.textbbox((0, 0), player_name, player_name_ttf, anchor="lt")
-    _, _, title_width, title_height = drawer.textbbox((0, 0), title, title_ttf, anchor="lt")
-    _, _, id_width, id_height = drawer.textbbox((0, 0), id, id_ttf, anchor="lt")
-
-    drawer.text(xy=(0.5 * (background.size[0] - player_name_width), 0.5 * (background.size[1] - player_name_height) - offset_size),
-                text=player_name,
-                fill="#FFFFFF",
-                font=player_name_ttf,
-                anchor="lt")
-
-    drawer.text((0 + offset_size, 0 + offset_size),
-                title, "#FFFFFF", title_ttf,
-                anchor="lt")
-    drawer.text((0 + offset_size, background.size[1] - id_height - offset_size),
-                id, "#FFFFFF", id_ttf,
-                anchor="lt")
-
-    background.show()
-    
-    '''
 
     player_name = "VeronIKA"
     back_name = "Npl_Catalog_Season01_Lv31.webp"
