@@ -53,7 +53,14 @@ def get_tag_badge(name):
     return img
 
 
-def add_badge(back, badge_name, badge_pos, badge_num):
+def add_badge(back, badge_list, badge_pos):
+    for i in range(len(badge_list)):
+        if badge_list[i] != "":
+            back.paste(badge_list[i], badge_pos[i], badge_list[i])
+        else:
+            continue
+
+
     return back
 
 
@@ -61,35 +68,34 @@ def add_text(back, text, text_pos, mode):
     return back
 
 
-def get_tag_img(player_name, back_name, badge_name, badge_num, title, title_mode, id):
+def get_tag_img(player_name, back_name, badge_name, title, id):
     back = circle_corner(get_tag_background(back_name), 6)
 
+    back_width = back.size[0]
+    back_height = back.size[1]
     badge_size = (70, 70)
     player_name_size = 60
     title_size = 30
     id_size = 25
-
-
-    badge_0 = get_tag_badge(badge_name[0]).resize(badge_size, Image.ANTIALIAS) if badge_name[0] != "" else None
-    badge_1 = get_tag_badge(badge_name[1]).resize(badge_size, Image.ANTIALIAS) if badge_name[1] != "" else None
-    badge_2 = get_tag_badge(badge_name[2]).resize(badge_size, Image.ANTIALIAS) if badge_name[2] != "" else None
-
-    back_width = back.size[0]
-    back_height = back.size[1]
-    badge_size = badge_0.size[0] if badge_0 is not None else None
     offset_size = int(back_height * 0.03)
 
-    badge_0_pos = (back_width - 3 * badge_size - 3 * offset_size, back_height - badge_size - offset_size)
-    badge_1_pos = (back_width - 2 * badge_size - 2 * offset_size, back_height - badge_size - offset_size)
-    badge_2_pos = (back_width - badge_size - offset_size, back_height - badge_size - offset_size)
+    if badge_name is not None:
+        badge_list = []
+        badge_pos = []
+        for i in range(len(badge_name)):
+            if badge_name[i] != "":
+                badge_list.append(get_tag_badge(badge_name[i]).resize(badge_size, Image.ANTIALIAS))
+            else:
+                badge_list.append("")
+            seq = 3 - i
+            pos = (back_width - seq * badge_size[0] - seq * offset_size,
+                   back_height - badge_size[0] - offset_size)
+            badge_pos.append(pos)
+        add_badge(back, badge_list, badge_pos)
 
-    back.paste(badge_0, badge_0_pos, badge_0)
-    back.paste(badge_1, badge_1_pos, badge_1)
-    back.paste(badge_2, badge_2_pos, badge_2)
-
-    player_name_ttf = ImageFont.truetype(ttf_path, player_name_size)
-    title_ttf = ImageFont.truetype(ttf_path, title_size)
-    id_ttf = ImageFont.truetype(ttf_path, id_size)
+    player_name_ttf = ImageFont.truetype(en_font_path, player_name_size)
+    title_ttf = ImageFont.truetype(en_font_path, title_size)
+    id_ttf = ImageFont.truetype(en_font_path, id_size)
 
     drawer = ImageDraw.Draw(back)
 
