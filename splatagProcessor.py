@@ -134,3 +134,4 @@ if __name__ == '__main__':
 
     img = get_tag_img(player_name, back_name, badge_name, title, "cn", id)
     img.show()
+    img.show()
