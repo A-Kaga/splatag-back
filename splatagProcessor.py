@@ -60,42 +60,51 @@ def add_badge(back, badge_list, badge_pos):
         else:
             continue
 
-
     return back
 
 
-def add_text(back, text, text_pos, mode):
-    return back
+def add_text(drawer, text, text_pos, font):
+
+    drawer.text(xy=text_pos,
+                text=text,
+                fill="#FFFFFF",
+                font=font,
+                anchor="lt")
+
+    return drawer
 
 
-def get_tag_img(player_name, back_name, badge_name, title, id):
+def get_tag_img(player_name, back_name, badge_name, title, mode, id):
     back = circle_corner(get_tag_background(back_name), 6)
-
     back_width = back.size[0]
     back_height = back.size[1]
-    badge_size = (70, 70)
-    player_name_size = 60
-    title_size = 30
-    id_size = 25
-    offset_size = int(back_height * 0.03)
+    width_offset = int(back_width * 0.01)
+    height_offset = int(back_height * 0.06)
 
-    if badge_name is not None:
-        badge_list = []
-        badge_pos = []
-        for i in range(len(badge_name)):
-            if badge_name[i] != "":
-                badge_list.append(get_tag_badge(badge_name[i]).resize(badge_size, Image.ANTIALIAS))
-            else:
-                badge_list.append("")
-            seq = 3 - i
-            pos = (back_width - seq * badge_size[0] - seq * offset_size,
-                   back_height - badge_size[0] - offset_size)
-            badge_pos.append(pos)
-        add_badge(back, badge_list, badge_pos)
+    badge_size = (65, 65)
+    badge_list = []
+    badge_pos = []
+    for i in range(len(badge_name)):
+        if badge_name[i] != "":
+            badge_list.append(get_tag_badge(badge_name[i]).resize(badge_size, Image.ANTIALIAS))
+        else:
+            badge_list.append("")
+        seq = 3 - i
+        pos = (back_width - seq * badge_size[0] - seq * width_offset,
+                back_height - badge_size[0] - height_offset)
+        badge_pos.append(pos)
+    add_badge(back, badge_list, badge_pos)
+
+    player_name_size = 75
+    title_size = 32
+    id_size = 25
 
     player_name_ttf = ImageFont.truetype(en_font_path, player_name_size)
-    title_ttf = ImageFont.truetype(en_font_path, title_size)
     id_ttf = ImageFont.truetype(en_font_path, id_size)
+    if mode == "cn":
+        title_ttf = ImageFont.truetype(cn_font_path, title_size)
+    else:
+        title_ttf = ImageFont.truetype(en_font_path, title_size)
 
     drawer = ImageDraw.Draw(back)
 
@@ -103,34 +112,25 @@ def get_tag_img(player_name, back_name, badge_name, title, id):
     _, _, title_width, title_height = drawer.textbbox((0, 0), title, title_ttf, anchor="lt")
     _, _, id_width, id_height = drawer.textbbox((0, 0), id, id_ttf, anchor="lt")
 
-    title_pos = (0 + offset_size, 0 + offset_size)
-    player_name_pos = (0.5 * (back_width - player_name_width), 0.5 * (back_height - player_name_height) - offset_size)
-    id_pos = (0 + offset_size, back_height - id_height - offset_size)
+    player_name_pos = (0.5 * (back_width - player_name_width), 0.5 * (back_height - player_name_height))
+    title_pos = (0 + width_offset, 0 + height_offset)
+    id_pos = (0 + width_offset, back_height - id_height - height_offset)
 
-    drawer.text(xy=player_name_pos,
-                text=player_name,
-                fill="#FFFFFF",
-                font=player_name_ttf,
-                anchor="lt")
-
-    drawer.text(title_pos,
-                title, "#FFFFFF", title_ttf,
-                anchor="lt")
-    drawer.text(id_pos,
-                id, "#FFFFFF", id_ttf,
-                anchor="lt")
+    add_text(drawer, player_name, player_name_pos, player_name_ttf)
+    add_text(drawer, title, title_pos, title_ttf)
+    add_text(drawer, id, id_pos, id_ttf)
 
     return back
 
 
 if __name__ == '__main__':
-    player_name = "I_Love_Missiles"
+    player_name = "I_love_Missiles"
     back_name = "Npl_Catalog_Season01_Lv31.webp"
     badge_name = ["Badge_WinCount_WeaponSp_SpMultiMissile_Lv00.webp",
                   "Badge_WinCount_WeaponSp_SpMultiMissile_Lv01.webp",
                   "Badge_WinCount_WeaponSp_SpMultiMissile_Lv02.webp"]
-    title = "アイドル"
+    title = "心跳加速的多重导弹操作者"
     id = "#2101"
 
-    img = get_tag_img(player_name, back_name, badge_name, title, id)
+    img = get_tag_img(player_name, back_name, badge_name, title, "cn", id)
     img.show()
