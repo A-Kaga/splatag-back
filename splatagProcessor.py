@@ -6,7 +6,8 @@ cur_path = os.getcwd()
 badge_folder = os.path.join(cur_path, 'resources', 'badge')
 background_folder = os.path.join(cur_path, 'resources', 'background')
 title_folder = os.path.join(cur_path, 'resources', 'title')
-ttf_path = os.path.join(cur_path, 'resources', 'font', 'SplatoonFontFix.otf')
+en_font_path = os.path.join(cur_path, 'resources', 'font', 'SplatoonFontFix.otf')
+cn_font_path = os.path.join(cur_path, 'resources', 'font', 'WenYue_XinQingNianTi_J-W8.otf')
 
 
 def image_to_base64(image):
@@ -52,20 +53,23 @@ def get_tag_badge(name):
     return img
 
 
-def get_tag_img(player_name, back_name, badge_name, title, id):
-    """
-    background = circle_corner(get_tag_background(back_name), 20)[1]
-    badge_0 = circle_corner(get_tag_badge(badge_name[0]), 16)[0].resize(badge_size, Image.ANTIALIAS)
-    badge_1 = circle_corner(get_tag_badge(badge_name[1]), 16)[1].resize(badge_size, Image.ANTIALIAS)
-    badge_2 = circle_corner(get_tag_badge(badge_name[2]), 16)[2].resize(badge_size, Image.ANTIALIAS)
-    """
+def add_badge(back, badge_name, badge_pos, badge_num):
+    return back
 
-    badge_size = (80, 80)
-    player_name_size = 60
-    title_size = 40
-    id_size = 30
 
+def add_text(back, text, text_pos, mode):
+    return back
+
+
+def get_tag_img(player_name, back_name, badge_name, badge_num, title, title_mode, id):
     back = circle_corner(get_tag_background(back_name), 6)
+
+    badge_size = (70, 70)
+    player_name_size = 60
+    title_size = 30
+    id_size = 25
+
+
     badge_0 = get_tag_badge(badge_name[0]).resize(badge_size, Image.ANTIALIAS) if badge_name[0] != "" else None
     badge_1 = get_tag_badge(badge_name[1]).resize(badge_size, Image.ANTIALIAS) if badge_name[1] != "" else None
     badge_2 = get_tag_badge(badge_name[2]).resize(badge_size, Image.ANTIALIAS) if badge_name[2] != "" else None
@@ -73,15 +77,15 @@ def get_tag_img(player_name, back_name, badge_name, title, id):
     back_width = back.size[0]
     back_height = back.size[1]
     badge_size = badge_0.size[0] if badge_0 is not None else None
-    offset_size = int(back_height * 0.05)
+    offset_size = int(back_height * 0.03)
 
     badge_0_pos = (back_width - 3 * badge_size - 3 * offset_size, back_height - badge_size - offset_size)
     badge_1_pos = (back_width - 2 * badge_size - 2 * offset_size, back_height - badge_size - offset_size)
     badge_2_pos = (back_width - badge_size - offset_size, back_height - badge_size - offset_size)
 
-    back.paste(badge_0, badge_0_pos)
-    back.paste(badge_1, badge_1_pos)
-    back.paste(badge_2, badge_2_pos)
+    back.paste(badge_0, badge_0_pos, badge_0)
+    back.paste(badge_1, badge_1_pos, badge_1)
+    back.paste(badge_2, badge_2_pos, badge_2)
 
     player_name_ttf = ImageFont.truetype(ttf_path, player_name_size)
     title_ttf = ImageFont.truetype(ttf_path, title_size)
@@ -114,13 +118,12 @@ def get_tag_img(player_name, back_name, badge_name, title, id):
 
 
 if __name__ == '__main__':
-
-    player_name = "VeronIKA"
+    player_name = "I_Love_Missiles"
     back_name = "Npl_Catalog_Season01_Lv31.webp"
-    badge_name = ["Badge_CoopGrade_Normal_Shakedent_Lv00.webp",
-                  "Badge_CoopGrade_Normal_Shakedent_Lv00.webp",
-                  "Badge_CoopGrade_Normal_Shakedent_Lv00.webp"]
-    title = "Hotlantis Part-Timer"
+    badge_name = ["Badge_WinCount_WeaponSp_SpMultiMissile_Lv00.webp",
+                  "Badge_WinCount_WeaponSp_SpMultiMissile_Lv01.webp",
+                  "Badge_WinCount_WeaponSp_SpMultiMissile_Lv02.webp"]
+    title = "アイドル"
     id = "#2101"
 
     img = get_tag_img(player_name, back_name, badge_name, title, id)
