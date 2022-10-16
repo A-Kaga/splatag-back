@@ -64,7 +64,6 @@ def add_badge(back, badge_list, badge_pos):
 
 
 def add_text(drawer, text, text_pos, font):
-
     drawer.text(xy=text_pos,
                 text=text,
                 fill="#FFFFFF",
@@ -91,7 +90,7 @@ def get_tag_img(player_name, back_name, badge_name, title, mode, id):
             badge_list.append("")
         seq = 3 - i
         pos = (back_width - seq * badge_size[0] - seq * width_offset,
-                back_height - badge_size[0] - height_offset)
+               back_height - badge_size[0] - height_offset)
         badge_pos.append(pos)
     add_badge(back, badge_list, badge_pos)
 
@@ -124,14 +123,19 @@ def get_tag_img(player_name, back_name, badge_name, title, mode, id):
 
 
 if __name__ == '__main__':
+    # 输入用户名
     player_name = "I_love_Missiles"
+    # 输入背景文件名，背景资源位于resources/background中
     back_name = "Npl_Catalog_Season01_Lv31.webp"
+    # 输入徽章文件名，徽章资源位于resources/badge，不需要可置为“”
     badge_name = ["Badge_WinCount_WeaponSp_SpMultiMissile_Lv00.webp",
                   "Badge_WinCount_WeaponSp_SpMultiMissile_Lv01.webp",
                   "Badge_WinCount_WeaponSp_SpMultiMissile_Lv02.webp"]
+    # 输入称号，称号格式形容词（adjectives）+ 对象（subjects），所有称号位于resources/title
     title = "心跳加速的多重导弹操作者"
+    # 输入id
     id = "#2101"
 
+    # 若称号为中文，则mode="cn"以匹配合适的字体文件
     img = get_tag_img(player_name, back_name, badge_name, title, "cn", id)
-    img.show()
     img.show()
